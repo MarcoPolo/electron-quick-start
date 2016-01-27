@@ -9,5 +9,26 @@
     We are using node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+    <button id="popup"> Popup new window in 5s </button>
+
+    <script>
+      const electron = require('electron');
+      const remote = electron.remote
+      const BrowserWindow = remote.BrowserWindow
+
+      document.getElementById('popup').onclick = () => {
+        setTimeout(() => {
+          const popup = new BrowserWindow({width: 400, height: 400, /* alwaysOnTop: true  /* with this it is on top, but still not focused */});
+          popup.loadURL('file://' + __dirname + '/simple.html');
+
+          // Attempts to focus it still don't work. `isFocused` properly returns false
+          setTimeout(() => {
+            console.log('is focused?', popup.isFocused())
+            popup.focus()
+            console.log('is focused?', popup.isFocused())
+          }, 1e3)
+        }, 5e3)
+      }
+    </script>
   </body>
 </html>
