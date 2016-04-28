@@ -23,12 +23,11 @@ function buildWin32SocketRoot () {
 
 function testConn () {
   console.log('starting connection')
-  // const p = '\\\\.\\pipe\\kbservice\\Users\\IEUser\\AppData\\Roaming\\Keybase\\keybased.sock'
   const socketRoot = buildWin32SocketRoot()
   const socketName = 'keybased.sock'
   const socketPath = path.join(socketRoot, socketName)
 
-  const s = net.connect({path: socketPath}, () => { console.log('connected') })
+  const s = net.connect({path: socketPath}, () => { console.log('connected', arguments) })
 
   s.on('end', () => {
     console.log('disconnected from server')
@@ -37,6 +36,8 @@ function testConn () {
   }).on('lookup', (l) => {
     console.log('lookup: ', l)
   })
+
+  return s
 }
 
 module.exports = testConn

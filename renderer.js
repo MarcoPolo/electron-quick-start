@@ -7,5 +7,4 @@ function windowsHack () {
 }
 
 window.windowsHack = windowsHack
-
-testConn()
+window.lastS = testConn()
